@@ -1,0 +1,352 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>K13 — Guiones de producción · Fase 01</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT@9..144,300..900,0..100&family=Bricolage+Grotesque:opsz,wght@12..96,300..800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#F4F2FF; --bg-2:#E8E5FA; --ink:#050347; --ink-2:#0A0764; --paper:#FFFFFF;
+    --accent:#2025C9; --peri:#6670FF; --lavender:#B098F0; --muted:#5B5894;
+    --line:rgba(5,3,71,.14); --line-soft:rgba(5,3,71,.08);
+    --display:"Fraunces","Times New Roman",serif; --body:"Bricolage Grotesque",system-ui,sans-serif; --mono:"JetBrains Mono",ui-monospace,monospace;
+    --radius:18px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--ink);font-family:var(--body);line-height:1.5;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;overflow-x:hidden}
+  body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:100;opacity:.3;mix-blend-mode:multiply;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/><feColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.15 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>")}
+  ::selection{background:var(--lavender);color:var(--ink)}
+
+  .topbar{position:fixed;top:0;left:0;right:0;z-index:50;background:rgba(244,242,255,.78);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line);padding:14px 32px;display:flex;justify-content:space-between;align-items:center;font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase}
+  .topbar .brand{display:flex;align-items:center;gap:10px;font-weight:500;color:var(--ink)}
+  .topbar .brand .dot{width:7px;height:7px;background:var(--accent);border-radius:50%;animation:pulse 1.6s ease-in-out infinite}
+  @keyframes pulse{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(.55);opacity:.55}}
+  .topbar .who{color:var(--muted)}
+  .topbar .nav{display:flex;gap:6px}
+  .topbar .nav a{color:var(--muted);text-decoration:none;padding:6px 13px;border-radius:99px;border:1px solid transparent;transition:color .2s,background .2s,border-color .2s}
+  .topbar .nav a:hover{color:var(--ink)}
+  .topbar .nav a.active{color:var(--paper);background:var(--accent);border-color:var(--accent)}
+  @media(max-width:600px){.topbar{padding:12px 18px}}
+
+  .wrap{max-width:1000px;margin:0 auto;padding:100px 32px 80px}
+  @media(max-width:600px){.wrap{padding:90px 18px 60px}}
+
+  .hero{padding:30px 0 50px;border-bottom:1px solid var(--line);margin-bottom:60px}
+  .hero .kicker{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:22px}
+  .hero h1{font-family:var(--display);font-weight:360;font-variation-settings:"opsz" 144,"SOFT" 30;font-size:clamp(48px,8vw,120px);line-height:.9;letter-spacing:-.035em;color:var(--ink)}
+  .hero h1 em{font-style:italic;font-weight:300;font-variation-settings:"opsz" 144,"SOFT" 100;color:var(--accent)}
+  .hero-sub{font-family:var(--display);font-weight:350;font-size:clamp(18px,2.2vw,28px);color:var(--ink-2);margin-top:16px;line-height:1.2}
+  .hero-intro{margin-top:24px;padding:18px 22px;background:var(--paper);border-left:3px solid var(--accent);border-radius:0 12px 12px 0;max-width:78ch;font-size:15px;line-height:1.55;color:var(--ink-2)}
+  .hero-intro strong{color:var(--ink);font-weight:500}
+
+  .legal{margin-top:24px;background:#FFF8E6;border:1px solid #F4D078;border-radius:12px;padding:18px 20px}
+  .legal h4{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#8A5A00;margin-bottom:10px}
+  .legal ul{list-style:none}
+  .legal li{font-size:13.5px;color:#5A3A00;line-height:1.5;padding-left:18px;position:relative;margin-bottom:5px}
+  .legal li::before{content:"!";position:absolute;left:0;font-family:var(--display);font-weight:600;color:#C58A00}
+
+  .section{margin-bottom:60px}
+  .section-head{display:grid;grid-template-columns:auto 1fr;gap:20px;align-items:baseline;margin-bottom:30px;padding-bottom:16px;border-bottom:1px solid var(--line)}
+  .section-num{font-family:var(--mono);font-size:12px;letter-spacing:.14em;color:var(--muted)}
+  .section-head h2{font-family:var(--display);font-weight:350;font-variation-settings:"opsz" 144,"SOFT" 20;font-size:clamp(30px,4.5vw,52px);line-height:.95;letter-spacing:-.025em;color:var(--ink)}
+  .section-head h2 em{font-style:italic;color:var(--accent);font-weight:300}
+  @media(max-width:600px){.section-head{grid-template-columns:1fr;gap:6px}}
+
+  .guion{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);padding:32px;margin-bottom:24px;position:relative;overflow:hidden}
+  .guion::before{content:"";position:absolute;top:0;left:0;width:5px;height:100%;background:linear-gradient(180deg,var(--accent),var(--peri),var(--lavender))}
+  .g-head{display:flex;align-items:flex-start;gap:16px;margin-bottom:8px;flex-wrap:wrap}
+  .g-num{background:var(--ink);color:var(--paper);min-width:48px;height:48px;padding:0 14px;border-radius:99px;display:flex;align-items:center;justify-content:center;font-family:var(--display);font-weight:350;font-size:20px;flex-shrink:0}
+  .g-head .g-titles{flex:1;min-width:0}
+  .g-tag{display:inline-block;font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);border:1px solid var(--accent);padding:3px 9px;border-radius:99px;margin-bottom:8px}
+  .g-head h3{font-family:var(--display);font-weight:350;font-size:clamp(24px,3.2vw,36px);line-height:1.02;letter-spacing:-.02em;color:var(--ink)}
+  .g-head h3 em{font-style:italic;color:var(--accent);font-weight:300}
+  .specs{display:flex;gap:8px;flex-wrap:wrap;margin:16px 0 22px}
+  .spec{font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;background:var(--bg-2);color:var(--ink-2);padding:6px 11px;border-radius:99px;border:1px solid var(--line-soft)}
+  .spec.ok{background:#DFF5E1;border-color:#9BD7A4;color:#1E5E2A}
+  .spec.draft{background:#FFF1D6;border-color:#F4D078;color:#8A5A00}
+
+  .blk{margin-top:20px}
+  .blk h6{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin-bottom:10px;font-weight:500}
+  .blk p{font-size:15px;color:var(--ink-2);line-height:1.55}
+
+  .copy-box{background:linear-gradient(135deg,var(--ink) 0%,var(--ink-2) 100%);color:var(--paper);padding:20px 22px;border-radius:12px;font-size:15.5px;line-height:1.7;margin-top:10px}
+  .copy-box em{color:var(--lavender);font-style:italic}
+  .copy-box .lbl{display:block;font-family:var(--mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--lavender);margin-bottom:14px}
+  /* guion estilo teleprompter: aire entre líneas e ideas, fácil de leer al grabar */
+  .copy-box.script{font-size:17px;line-height:2.05}
+  .copy-box.script .hook{display:block;font-size:19px;font-style:italic;color:var(--lavender);margin-bottom:24px}
+  .copy-box.script ol{list-style:none;margin:6px 0 26px;padding:0;counter-reset:s}
+  .copy-box.script ol li{counter-increment:s;position:relative;padding:14px 16px 14px 52px;margin-bottom:14px;line-height:1.55;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:12px}
+  .copy-box.script ol li:last-child{margin-bottom:0}
+  .copy-box.script ol li::before{content:counter(s);position:absolute;left:14px;top:13px;width:26px;height:26px;background:var(--lavender);color:var(--ink);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:13px;font-weight:700}
+  .copy-box p, .copy-box.script p{margin-bottom:22px;color:var(--paper);font-size:inherit;line-height:inherit}
+  .copy-box.script p:last-child{margin-bottom:0}
+  .copy-box.script ol li{color:var(--paper)}
+
+  .caption{background:var(--bg-2);border:1px solid var(--line-soft);border-radius:12px;padding:16px 18px;margin-top:10px;font-size:14.5px;line-height:1.6;color:var(--ink-2)}
+
+  .pending{background:#FFF8E6;border:1px solid #F4D078;border-radius:10px;padding:14px 16px;margin-top:18px}
+  .pending-label{display:inline-block;font-family:var(--mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:#8A5A00;background:#F4D078;padding:3px 9px;border-radius:99px;margin-bottom:10px;font-weight:600}
+  .pending ul{list-style:none}
+  .pending li{font-size:13.5px;color:#5A3A00;line-height:1.5;padding-left:18px;position:relative;margin-bottom:5px}
+  .pending li::before{content:"?";position:absolute;left:0;font-family:var(--display);font-weight:500;color:#C58A00}
+
+  .closing{background:var(--ink);color:var(--paper);border-radius:var(--radius);padding:42px 36px;text-align:center;margin-top:30px}
+  .closing h3{font-family:var(--display);font-weight:300;font-variation-settings:"opsz" 144,"SOFT" 80;font-size:clamp(30px,4.5vw,52px);line-height:1;letter-spacing:-.02em;margin-bottom:12px}
+  .closing h3 em{font-style:italic;color:var(--lavender)}
+  .closing p{font-size:15px;opacity:.82;max-width:62ch;margin:0 auto}
+
+  footer{margin-top:60px;padding-top:28px;border-top:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+  footer .mark{font-family:var(--display);font-weight:350;font-size:18px;color:var(--ink);letter-spacing:-.01em;text-transform:none}
+  footer .mark em{font-style:italic;color:var(--accent);font-weight:300}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="brand"><span class="dot"></span> Guiones de producción · K13 × Hounterleads</div>
+  <nav class="nav">
+    <a href="./">Parrilla</a>
+    <a href="guiones.html" class="active">Guiones</a>
+  </nav>
+</div>
+
+<div class="wrap">
+
+  <header class="hero">
+    <div class="kicker">[ Guiones de producción · Meta · Fase 01 ]</div>
+    <h1>Guiones <em>de los videos</em>.</h1>
+    <div class="hero-sub">K13 · Clínica Odontológica · El Poblado · Medellín</div>
+    <div class="legal">
+      <h4>Reglas de cumplimiento (aplican a todas las piezas)</h4>
+      <ul>
+        <li>Ortodoncia: la valoración es gratis, pero <strong>NO se menciona en los anuncios</strong> — se reserva como gancho del closer en WhatsApp.</li>
+        <li>Implantes: la <strong>valoración con especialista cuesta $100.000</strong> (NO es gratis). Ningún guion de implantes promete valoración gratis.</li>
+        <li>Financiación: decir <strong>"facilidad de pago a cuotas"</strong> (con Welli). <strong>NO mencionar Sistecrédito</strong> — K13 no lo tiene. Nunca "100% financiación".</li>
+        <li>Salud (políticas Meta): <strong>no</strong> prometer "resultados garantizados". <strong>No</strong> usar antes/después de pacientes sin consentimiento firmado.</li>
+        <li>Solo valoraciones <strong>presenciales</strong>. CTA siempre a WhatsApp <strong>312 666 0501</strong>.</li>
+      </ul>
+    </div>
+  </header>
+
+  <!-- ============ CAMPAÑA 01 ORTODONCIA ============ -->
+  <section class="section">
+    <div class="section-head">
+      <div class="section-num">[ Campaña 01 / Ortodoncia ]</div>
+      <h2>Sonrisas <em>en proceso</em>.</h2>
+    </div>
+
+    <!-- IDEA 01 · estática (sin guion) -->
+    <article class="guion">
+      <div class="g-head">
+        <div class="g-num">01</div>
+        <div class="g-titles">
+          <span class="g-tag">Gancho · Accesibilidad · pieza estática</span>
+          <h3>"La barrera <em>no es el precio</em>"</h3>
+        </div>
+      </div>
+      <div class="specs"><span class="spec">Pieza estática (no video)</span><span class="spec">1:1 / 4:5 feed</span><span class="spec ok">✓ Pieza lista (2 versiones)</span></div>
+
+      <div class="blk"><h6>Pieza lista · 2 versiones</h6>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+          <figure style="margin:0"><img src="k13-assets/idea01-accesibilidad-v1.jpeg" alt="Pieza Accesibilidad v1" style="width:100%;border-radius:12px;border:1px solid var(--line);display:block"><figcaption style="font-family:var(--mono);font-size:10px;letter-spacing:.08em;color:var(--muted);margin-top:8px;text-transform:uppercase">Versión 1 · fondo claro</figcaption></figure>
+          <figure style="margin:0"><img src="k13-assets/idea01-accesibilidad-v2.jpeg" alt="Pieza Accesibilidad v2" style="width:100%;border-radius:12px;border:2px solid var(--accent);display:block"><figcaption style="font-family:var(--mono);font-size:10px;letter-spacing:.08em;color:var(--accent);margin-top:8px;text-transform:uppercase">Versión 2 · dorado + glow (recomendada)</figcaption></figure>
+        </div>
+      </div>
+
+      <div class="blk"><h6>Texto en pieza</h6><p>Titular: "No más dientes torcidos o separados" · Apoyo: "Tu sonrisa es única" · Botón: "Inicia tu ortodoncia hoy" · "Haz clic aquí"</p></div>
+    </article>
+
+    <!-- IDEA 02 · Señales (guion aprobado) -->
+    <article class="guion">
+      <div class="g-head">
+        <div class="g-num">02</div>
+        <div class="g-titles">
+          <span class="g-tag">Gancho · Identificación · TOFU</span>
+          <h3>"Señales que necesitas ortodoncia <em>y no lo sabías</em>"</h3>
+        </div>
+      </div>
+      <div class="specs"><span class="spec">Reel</span><span class="spec">~25–30 s</span><span class="spec">9:16</span><span class="spec">Voz en off + b-roll</span><span class="spec ok">✓ Guion final aprobado</span></div>
+
+      <div class="blk"><h6>Guion (narrar de corrido)</h6>
+        <div class="copy-box script"><span class="lbl">Texto exacto a grabar</span><span class="hook">señales que necesitas ortodoncia y no lo sabias</span><ol><li>tus dientes se montan, se ven apiñados o torcidos, y por más que cepilles quedan espacios difíciles de limpiar.</li><li>sientes que tu mordida no encaja bien, te cuesta masticar parejo o notas que un lado trabaja más que el otro.</li><li>te tapas la boca o escondes los dientes cuando sonríes en las fotos, porque no te sientes del todo cómodo con tu sonrisa.</li></ol><p>Si te identificaste con una sola de estas, vale la pena revisarlo a tiempo — y si no, también es bueno confirmarlo con un profesional.</p><p>En K13 tu valoración de ortodoncia es con la ortodoncista: revisamos tu caso en persona y te decimos qué necesitas, sin compromiso. Escríbenos al WhatsApp y agenda tu cita.</p></div>
+      </div>
+
+      <div class="blk"><h6>Estructura</h6><p><strong>Hook:</strong> "señales que necesitas ortodoncia y no lo sabias" · <strong>3 señales comunes:</strong> dientes apiñados · mordida que no encaja · esconder la sonrisa · <strong>CTA:</strong> agenda tu valoración → WhatsApp.</p></div>
+    </article>
+
+    <!-- VIDEO 03 -->
+    <article class="guion">
+      <div class="g-head">
+        <div class="g-num">03</div>
+        <div class="g-titles">
+          <span class="g-tag">Gancho · Mordida · TOFU</span>
+          <h3>"Tu mordida <em>también es salud</em>"</h3>
+        </div>
+      </div>
+      <div class="specs"><span class="spec">Reel</span><span class="spec">~25 s</span><span class="spec">9:16</span><span class="spec">Doctora a cámara o visual de mordidas</span><span class="spec draft">Borrador · por aprobar</span></div>
+
+      <div class="blk"><h6>Guion (narrar de corrido)</h6>
+        <div class="copy-box script"><span class="lbl">Texto a grabar</span><span class="hook">Necesitas ortodoncia si tu mordida se ve así.</span><ol><li>Sobremordida: tus dientes de arriba tapan demasiado los de abajo al cerrar.</li><li>Mordida cruzada: algunos dientes de arriba quedan por dentro de los de abajo.</li><li>Mordida abierta: aunque cierres la boca, queda un espacio entre los dientes de arriba y los de abajo.</li><li>Mordida invertida: los dientes de abajo quedan por delante de los de arriba.</li></ol><p>Una mordida desalineada no es solo estética: con el tiempo puede causar desgaste en tus dientes, dolor de mandíbula y dificultad para masticar.</p><p>En K13 tu valoración de ortodoncia es con la ortodoncista: revisamos cómo está tu mordida y te decimos qué necesitas. Escríbenos al WhatsApp y agenda tu cita.</p></div>
+      </div>
+
+      <div class="blk"><h6>Estructura</h6><p><strong>Hook:</strong> "Necesitas ortodoncia si tu mordida se ve así." · <strong>4 tipos de mordida:</strong> sobremordida · cruzada · abierta · invertida · <strong>CTA al final:</strong> agenda tu valoración → WhatsApp.</p></div>
+    </article>
+
+    <!-- VIDEO 04 -->
+    <article class="guion">
+      <div class="g-head">
+        <div class="g-num">04</div>
+        <div class="g-titles">
+          <span class="g-tag">Educativo · Proceso K13 · MOFU</span>
+          <h3>"Así es tu proceso <em>en K13</em>"</h3>
+        </div>
+      </div>
+      <div class="specs"><span class="spec">Reel</span><span class="spec">~30–35 s</span><span class="spec">9:16</span><span class="spec">Doctora a cámara + b-roll clínica</span><span class="spec draft">⏸ En espera · requiere info de la doctora</span></div>
+
+      <div class="blk"><h6>Guion (narrar de corrido)</h6>
+        <div class="copy-box script"><span class="lbl">Texto a grabar · pasos POR COMPLETAR con la doctora</span><span class="hook">¿Cómo es un tratamiento de ortodoncia en K13? Te lo cuento paso a paso.</span><ol><li><span style="display:inline-block;width:92%;border-bottom:1px dashed rgba(255,255,255,.4)">&nbsp;</span></li><li><span style="display:inline-block;width:92%;border-bottom:1px dashed rgba(255,255,255,.4)">&nbsp;</span></li><li><span style="display:inline-block;width:92%;border-bottom:1px dashed rgba(255,255,255,.4)">&nbsp;</span></li><li><span style="display:inline-block;width:92%;border-bottom:1px dashed rgba(255,255,255,.4)">&nbsp;</span></li><li><span style="display:inline-block;width:92%;border-bottom:1px dashed rgba(255,255,255,.4)">&nbsp;</span></li></ol><p>Da el primer paso: escríbenos al WhatsApp y agenda tu valoración.</p></div>
+      </div>
+
+      <div class="blk"><h6>Estructura</h6><p><strong>Hook:</strong> "¿Cómo es un tratamiento de ortodoncia en K13?" · <strong>Pasos:</strong> EN BLANCO — completar con el proceso real que nos dé la doctora · <strong>CTA al final:</strong> agenda tu valoración → WhatsApp.</p></div>
+
+      <div class="pending"><span class="pending-label">Info que necesitamos del cliente para grabar</span><ul>
+        <li>Exámenes iniciales exactos y cada cuánto son los controles.</li>
+        <li>Tipos de brackets que manejan y cómo deciden cuál.</li>
+        <li>Fotos/videos del consultorio para el b-roll.</li>
+      </ul></div>
+    </article>
+
+    <!-- VIDEO 05 -->
+    <article class="guion">
+      <div class="g-head">
+        <div class="g-num">05</div>
+        <div class="g-titles">
+          <span class="g-tag">Directo · 3 razones · BOFU</span>
+          <h3>"3 razones <em>K13</em>"</h3>
+        </div>
+      </div>
+      <div class="specs"><span class="spec">Reel</span><span class="spec">~20 s</span><span class="spec">9:16</span><span class="spec">Doctora a cámara o motion</span><span class="spec draft">Borrador · por aprobar</span></div>
+
+      <div class="blk"><h6>Guion (narrar de corrido)</h6>
+        <div class="copy-box script"><span class="lbl">Texto a grabar</span><span class="hook">3 razones claras para iniciar tu ortodoncia en K13.</span><ol><li>Ubicación estratégica: estamos en El Poblado y contamos con instalaciones cómodas para nuestros pacientes.<em style="display:block;font-size:12px;opacity:.7;margin-top:5px;font-style:italic">🎥 mostrar espacios</em></li><li>Facilidad de pago: puedes pagar tu tratamiento a cuotas con nosotros.</li><li>Un especialista te acompaña en todo el proceso, desde tu cita de valoración hasta el retiro de tu ortodoncia. Nunca estás solo: somos un equipo sumamente profesional y siempre al pendiente de tus necesidades.</li></ol><p>Escríbenos al WhatsApp y agenda tu cita.</p></div>
+      </div>
+
+      <div class="blk"><h6>Estructura</h6><p><strong>Hook:</strong> "3 razones claras para iniciar tu ortodoncia en K13" · <strong>3 razones:</strong> ubicación estratégica + instalaciones cómodas (mostrar espacios) · facilidad de pago a cuotas · un especialista te acompaña en todo el proceso · <strong>CTA al final:</strong> agenda tu valoración → WhatsApp.</p></div>
+
+      <div class="pending"><span class="pending-label">Por confirmar con el cliente</span><ul>
+        <li>Años de experiencia de la doctora (refuerza la razón 3).</li>
+        <li>Algo único del consultorio/ambiente para la razón 1.</li>
+      </ul></div>
+    </article>
+  </section>
+
+  <!-- ============ CAMPAÑA 02 IMPLANTES ============ -->
+  <section class="section">
+    <div class="section-head">
+      <div class="section-num">[ Campaña 02 / Implantes ]</div>
+      <h2>Recuperar la <em>sonrisa</em>.</h2>
+    </div>
+
+    <!-- IMPLANTES IDEA 01 -->
+    <article class="guion">
+      <div class="g-head">
+        <div class="g-num">01</div>
+        <div class="g-titles">
+          <span class="g-tag">Gancho · Falta de un diente · TOFU</span>
+          <h3>"Te falta un diente… <em>y eso tiene solución</em>"</h3>
+        </div>
+      </div>
+      <div class="specs"><span class="spec">Reel</span><span class="spec">~20 s</span><span class="spec">9:16</span><span class="spec">Video del cliente o especialista a cámara</span><span class="spec draft">Borrador · por aprobar</span></div>
+
+      <div class="blk"><h6>Guion (narrar de corrido)</h6>
+        <div class="copy-box script"><span class="lbl">Texto a grabar</span><span class="hook">¿Te falta un diente?</span><p>Con K13 eso tiene solución. Un implante dental te devuelve la pieza que perdiste: vuelves a masticar bien, a hablar con confianza y a sonreír sin que se note que te faltaba algo. No es solo estética, es recuperar tu día a día.</p><p>En K13 un especialista valora tu caso a fondo y te dice cuál es la mejor opción para ti.</p><p>Escríbenos al WhatsApp y agenda tu valoración.</p></div>
+      </div>
+
+      <div class="blk"><h6>Estructura</h6><p><strong>Hook:</strong> te falta un diente, tiene solución · <strong>Cuerpo:</strong> beneficio funcional + emocional + respaldo del especialista · <strong>CTA:</strong> valoración con especialista → WhatsApp.</p></div>
+
+      <div class="pending"><span class="pending-label">Por confirmar con el cliente</span><ul>
+        <li>¿La valoración de $100.000 se <strong>abona al tratamiento</strong>? (si sí, se suma al guion como beneficio).</li>
+        <li>¿El cliente entrega el video base o se graba con la especialista?</li>
+      </ul></div>
+    </article>
+
+    <!-- IMPLANTES IDEA 02 · Consecuencias -->
+    <article class="guion">
+      <div class="g-head">
+        <div class="g-num">02</div>
+        <div class="g-titles">
+          <span class="g-tag">Educativo · Consecuencias · TOFU</span>
+          <h3>"No es solo <em>estético</em>"</h3>
+        </div>
+      </div>
+      <div class="specs"><span class="spec">Reel</span><span class="spec">~20 s</span><span class="spec">9:16</span><span class="spec">Especialista a cámara + esquema</span><span class="spec draft">Borrador · por aprobar</span></div>
+
+      <div class="blk"><h6>Guion (narrar de corrido)</h6>
+        <div class="copy-box script"><span class="lbl">Texto a grabar</span><span class="hook">¿Perdiste uno o más dientes y no hiciste nada?</span><p>Perder un diente no es solo un tema estético, y esto es lo que pasa si no lo reemplazas:</p><ol><li>Los dientes vecinos empiezan a moverse para ocupar el espacio vacío.</li><li>El hueso de esa zona se va perdiendo poco a poco.</li><li>Cambia tu mordida y tu forma de masticar, lo que puede traerte otros problemas con el tiempo.</li></ol><p>Por eso un implante no es vanidad, es salud.</p><p>En K13 un especialista valora tu caso y te explica tus opciones. Escríbenos al WhatsApp y agenda tu cita.</p></div>
+      </div>
+
+      <div class="blk"><h6>Estructura</h6><p><strong>Hook:</strong> "¿Perdiste uno o más dientes y no hiciste nada?" · <strong>3 consecuencias:</strong> dientes vecinos · pérdida de hueso · cambio de mordida · <strong>CTA al final:</strong> valoración con especialista → WhatsApp.</p></div>
+    </article>
+
+    <!-- IMPLANTES IDEA 03 -->
+    <article class="guion">
+      <div class="g-head">
+        <div class="g-num">03</div>
+        <div class="g-titles">
+          <span class="g-tag">Educativo · Proceso de implante · MOFU</span>
+          <h3>El proceso de implante <em>en K13</em></h3>
+        </div>
+      </div>
+      <div class="specs"><span class="spec">Reel</span><span class="spec">~25–30 s</span><span class="spec">9:16</span><span class="spec">Especialista a cámara + b-roll equipos</span><span class="spec draft">Borrador · por aprobar</span></div>
+
+      <div class="blk"><h6>Guion (narrar de corrido)</h6>
+        <div class="copy-box script"><span class="lbl">Texto a grabar</span><span class="hook">¿Te da miedo ponerte un implante dental? Así de sencillo es el proceso en K13.</span><ol><li>Tenemos una cita de valoración <strong style="color:#FFD27A">[¿qué revisa la doctora en la valoración? — completar]</strong>.</li><li>Hacemos una radiografía donde evaluamos la calidad de tu hueso. Y no importa si tienes poco hueso: aun así podemos ponerte un implante.</li><li>Pasamos a poner el implante mediante un procedimiento quirúrgico.</li><li>En esta primera fase se coloca la pieza de titanio, que hace las veces de raíz de la pieza dental.</li><li>Después, en unos meses, colocamos la superestructura y la corona del implante o de los implantes.</li></ol><p>Escríbenos al WhatsApp y agenda tu valoración con el especialista.</p></div>
+      </div>
+
+      <div class="blk"><h6>Estructura</h6><p><strong>Hook:</strong> "¿Te da miedo ponerte un implante dental? Así de sencillo es el proceso en K13." · <strong>Pasos:</strong> valoración → radiografía (calidad de hueso) → cirugía (pieza de titanio = raíz) → corona/superestructura · <strong>CTA al final:</strong> valoración con especialista → WhatsApp.</p></div>
+
+      <div class="blk"><h6>Puntos a tener en cuenta para el guion</h6><ul style="margin-left:20px;font-size:14.5px;color:var(--ink-2);line-height:1.7"><li>Valoración inicial y estudios óseos (radiografía 3D / escaneo)</li><li>Plan personalizado con tecnología de planificación digital</li><li>Cirugía: cómo es, cuánto dura, anestesia, equipo médico</li><li>Periodo de osteointegración (cicatrización del implante con el hueso)</li><li>Colocación de la corona</li><li>Controles y cuidados de largo plazo</li></ul></div>
+
+      <div class="pending"><span class="pending-label">Info que necesitamos del cliente para grabar</span><ul>
+        <li>Tipo/sistema de implante y si es en una sesión o por etapas.</li>
+        <li>Tipo de anestesia y duración aproximada del proceso.</li>
+        <li>Tecnología destacable (planificación digital, guías quirúrgicas, escáner 3D).</li>
+      </ul></div>
+    </article>
+
+    <!-- IMPLANTES IDEA 04 (estático) -->
+    <article class="guion">
+      <div class="g-head">
+        <div class="g-num">04</div>
+        <div class="g-titles">
+          <span class="g-tag">Post estático · Volver a sonreír · BOFU</span>
+          <h3>"Volver a sonreír <em>sin miedo</em>"</h3>
+        </div>
+      </div>
+      <div class="specs"><span class="spec">Imagen fija (no video)</span><span class="spec">1:1 / 4:5 feed</span><span class="spec ok">✓ Pieza lista</span></div>
+
+      <div class="blk"><h6>Pieza lista</h6>
+        <figure style="margin:0;max-width:420px"><img src="k13-assets/implantes-volver-sonreir.jpeg" alt="Pieza Volver a sonreír sin miedo" style="width:100%;border-radius:12px;border:1px solid var(--line);display:block"></figure>
+      </div>
+
+      <div class="blk"><h6>Texto en pieza</h6><p>Titular: "Sonríe de nuevo sin miedo" · Apoyo: "Con los implantes recuperas: ✓ Estética · ✓ Función" · Botón: "Agenda tu valoración" · "Haz clic aquí"</p></div>
+    </article>
+  </section>
+
+  <div class="closing">
+    <h3>Listos para <em>grabar</em>.</h3>
+  </div>
+
+  <footer>
+    <div class="mark">K13 <em>×</em> Hounterleads</div>
+    <div>Guiones de producción · Fase 01 · v2</div>
+  </footer>
+
+</div>
+</body>
+</html>
